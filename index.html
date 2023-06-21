@@ -82,9 +82,13 @@
 						</select>
 					</div>
 					<div class="parameter">
-						<label for="accessories">Аксессуары:</label>
+
+						<div class="tooltip">
+							<label for="accessories">Аксессуары:</label>
+							<span class="tooltiptext">Для выбора нескольких аксессуаров зажмите ⌘ Command или Ctrl</span>
+						</div>
 						<div class="select-wrapper" id="select-wrapper">
-							<select id="accessories" class="select" multiple>
+							<select id="accessories" class="select" multiple >
 								<option value="lock">Дополнительный замок</option>
 								<option value="handle-set">Набор ручек</option>
 								<option value="peephole">Глазок</option>
@@ -103,11 +107,12 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="price">
-				<p>Итоговая сумма: <span id="total-price">0</span> руб.</p>
+			<div class="output">
+				<div class="price">
+					<p>Итоговая сумма: <span id="total-price">0</span> руб.</p>
+				</div>
+				<button id="submit-button">Отправить комплектацию</button>
 			</div>
-			<button id="submit-button">Отправить комплектацию</button>
 		</div>
 		<script src="script.js"></script>
 	</body>
