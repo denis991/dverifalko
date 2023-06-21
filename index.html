@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Двери</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="header">
+			<h1>Конструктор дверей</h1>
+			<div class="door">
+				<div class="door-outer" id="outer-door">
+					<!-- // цвет покраски -->
+					<div class="door-color-paint"></div>
+					<!-- // цвет пленки -->
+					<div class="door-color-film"></div>
+					<!-- // расположенеи ручки -->
+					<div class="door-opening">
+						<!-- // цвет ручки -->
+						<div class="door-color-handle"></div>
+					</div>
+				</div>
+				<div class="door-inner" id="inner-door">
+					<div class="door-outer">
+						<!-- // цвет покраски -->
+						<div class="door-color-paint"></div>
+						<!-- // цвет пленки -->
+						<div class="door-color-film"></div>
+						<!-- // расположенеи ручки  -->
+						<div class="door-opening mirror">
+							<!-- // цвет ручки -->
+							<div class="door-color-handle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="parameters">
+				<div class="parameter">
+					<label for="color-paint">Цвет покраски:</label>
+					<select id="color-paint" class="select">
+						<option value="red">Красный</option>
+						<option value="blue">Синий</option>
+						<option value="green">Зеленый</option>
+						<option value="yellow">Желтый</option>
+						<option value="black">Черный</option>
+					</select>
+				</div>
+				<div class="parameter">
+					<label for="color-film">Цвет пленки:</label>
+					<select id="color-film" class="select">
+						<option value="white">Белый</option>
+						<option value="silver">Серебряный</option>
+						<option value="gold">Золотой</option>
+						<option value="rose-gold">Розовое золото</option>
+						<option value="black">Черный</option>
+					</select>
+				</div>
+				<div class="parameter">
+					<label for="color-handle">Цвет ручки:</label>
+					<select id="color-handle" class="select">
+						<option value="chrome">Хром</option>
+						<option value="brass">Латунь</option>
+						<option value="bronze">Бронза</option>
+						<option value="black">Черный</option>
+						<option value="white">Белый</option>
+					</select>
+				</div>
+				<div class="parameter">
+					<label for="width">Ширина:</label>
+					<input id="width" type="number" min="100" max="300" step="1" />
+				</div>
+				<div class="parameter">
+					<label for="height">Высота:</label>
+					<input id="height" type="number" min="100" max="300" step="1" />
+				</div>
+				<div class="parameter">
+					<label for="opening">Открывание:</label>
+					<select id="opening" class="select">
+						<option value="right">Правое</option>
+						<option value="left">Левое</option>
+					</select>
+				</div>
+				<div class="parameter">
+					<label for="accessories">Аксессуары:</label>
+					<div class="select-wrapper" id="select-wrapper">
+						<select id="accessories" class="select" multiple>
+							<option value="lock">Дополнительный замок</option>
+							<option value="handle-set">Набор ручек</option>
+							<option value="peephole">Глазок</option>
+							<option value="doorbell">Дверной звонок</option>
+							<option value="hinges">Петли</option>
+						</select>
+						<div class="dropdown-btns">
+							<button id="show-btn" onclick="showOptions()">Показать</button>
+							<button id="hide-btn" onclick="hideOptions()">Скрыть</button>
+						</div>
+					</div>
+				</div>
+				<div class="parameter">
+					<label for="selected-accessories">Выбранные аксессуары:</label>
+					<input id="selected-accessories" type="text" readonly />
+				</div>
+			</div>
+		</div>
+
+		<div class="price">
+			<p>Итоговая сумма: <span id="total-price">0</span> руб.</p>
+		</div>
+		<button id="submit-button">Отправить комплектацию</button>
+		<script src="script.js"></script>
+	</body>
+</html>
