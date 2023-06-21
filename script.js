@@ -24,6 +24,9 @@ hideBtn.addEventListener("click", hideOptions);
 accessoriesSelect.addEventListener("change", updateSelectedAccessories);
 
 //door двери
+
+
+
 // Получаем элементы управления параметрами
 const colorPaintSelect = document.getElementById('color-paint');
 const colorFilmSelect = document.getElementById('color-film');
@@ -35,24 +38,31 @@ const doorOuter = document.querySelector('.door-outer');
 const doorInner = document.querySelector('.door-inner');
 
 // Обработчик события изменения параметров
-function handleParameterChange() {
-  // Получаем выбранные значения параметров
-  const selectedColorPaint = colorPaintSelect.value;
-  const selectedColorFilm = colorFilmSelect.value;
-  const selectedColorHandle = colorHandleSelect.value;
-  const selectedOpening = openingSelect.value;
+function updateDoor() {
+    // Получаем выбранные значения параметров
+  const colorPaint = colorPaintSelect.value;
+  const colorFilm = colorFilmSelect.value;
+  const colorHandle = colorHandleSelect.value;
+  const opening = openingSelect.value;
 
+  outerDoor.style.backgroundColor = colorPaint;
+  innerDoor.style.backgroundColor = colorFilm;
+  innerDoor.style.borderColor = colorHandle;
+  innerDoor.style.borderStyle = 'solid';
+  innerDoor.style.borderWidth = '2px';
   // Применяем выбранные значения к двери
-  doorOuter.style.backgroundColor = selectedColorPaint;
-  doorInner.style.backgroundColor = selectedColorFilm;
-  doorInner.style.transform = selectedOpening === 'left' ? 'rotateY(180deg)' : 'rotateY(0)';
+  if (opening === 'left') {
+    outerDoor.style.transform = 'rotateY(180deg)';
+  } else {
+    outerDoor.style.transform = 'none';
+  }
 }
 
 // Добавляем обработчик события изменения параметров
-colorPaintSelect.addEventListener('change', handleParameterChange);
-colorFilmSelect.addEventListener('change', handleParameterChange);
-colorHandleSelect.addEventListener('change', handleParameterChange);
-openingSelect.addEventListener('change', handleParameterChange);
+colorPaintSelect.addEventListener('change', updateDoor);
+colorFilmSelect.addEventListener('change', updateDoor);
+colorHandleSelect.addEventListener('change', updateDoor);
+openingSelect.addEventListener('change', updateDoor);
 //v2
 /**   // Функция для применения выбранных параметров к визуальной части двери
 function applyDoorStyle() {
