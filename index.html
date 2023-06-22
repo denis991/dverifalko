@@ -40,9 +40,9 @@
 						<!-- /*цвет покраски -> рамка двери  */ -->
 						<label for="color-paint">Цвет покраски:</label>
 						<select id="color-paint" class="select">
+							<option value="green">Зеленый</option>
 							<option value="red">Красный</option>
 							<option value="blue">Синий</option>
-							<option value="green">Зеленый</option>
 							<option value="yellow">Желтый</option>
 							<option value="black">Черный</option>
 						</select>
@@ -51,10 +51,10 @@
 						<!-- /*цвет цвет пленки -> цвет двери */ -->
 						<label for="color-film">Цвет пленки:</label>
 						<select id="color-film" class="select">
+							<option value="#FDDCD7">Розовое золото</option>
 							<option value="white">Белый</option>
 							<option value="silver">Серебряный</option>
 							<option value="gold">Золотой</option>
-							<option value="#FDDCD7">Розовое золото</option>
 							<option value="black">Черный</option>
 							<option value="red">Красный</option>
 						</select>
@@ -62,6 +62,7 @@
 					<div class="parameter">
 						<label for="color-handle">Цвет ручки:</label>
 						<select id="color-handle" class="select">
+							<option value="#90D3A0">Зеленый</option>
 							<option value="#9EA3A8">Хром</option>
 							<option value="#E1C16E">Латунь</option>
 							<option value="#cc6633">Бронза</option>
@@ -70,19 +71,19 @@
 						</select>
 					</div>
 					<div class="parameter">
-						<label for="width">Ширина:</label>
-						<input id="width" type="number" min="100" max="300" step="1" />
+						<label for="width">Ширина см:</label>
+						<input id="width" type="number" min="50" max="300" step="1" value="60" />
 					</div>
 					<div class="parameter">
-						<label for="height">Высота:</label>
-						<input id="height" type="number" min="100" max="300" step="1" />
+						<label for="height">Высота см:</label>
+						<input id="height" type="number" min="100" max="300" step="1" value="200" />
 					</div>
 					<div class="parameter">
 						<!-- 	align-items: flex-end; или 	align-items: flex-start; -->
 						<label for="opening">Открывание:</label>
 						<select id="opening" class="select">
-							<option value="right">Правое</option>
 							<option value="left">Левое</option>
+							<option value="right">Правое</option>
 						</select>
 					</div>
 					<div class="parameter">
@@ -94,11 +95,17 @@
 						</div>
 						<div class="select-wrapper" id="select-wrapper">
 							<select id="accessories" class="select" multiple>
-								<option value="lock">Дополнительный замок</option>
-								<option value="handle-set">Набор ручек</option>
-								<option value="peephole">Глазок</option>
-								<option value="doorbell">Дверной звонок</option>
-								<option value="hinges">Петли</option>
+								<option custom-attribute="3000" data-price="3000" value="lock">
+									Дополнительный замок
+								</option>
+								<option custom-attribute="4000" data-price="4000" value="handle-set">
+									Набор ручек
+								</option>
+								<option custom-attribute="500" data-price="500" value="peephole">Глазок</option>
+								<option custom-attribute="1800" data-price="1800" value="doorbell">
+									Дверной звонок
+								</option>
+								<option custom-attribute="2000" data-price="2000" value="hinges">Петли</option>
 							</select>
 							<div class="dropdown-btns">
 								<button id="show-btn" onclick="showOptions()">Показать</button>
