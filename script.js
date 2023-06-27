@@ -180,27 +180,27 @@ function sendToTelegramBot() {
 	const chatId = '215140425'; // Замените на имя вашего канала //526912355
 	const botToken = '5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88';
 	const url = 'https://api.telegram.org/bot' + botToken;
-  // const selectedDoorAccessoriesReturn = updateSelectedAccessories() ? updateSelectedAccessories() :  'нет аксессуаров'
-  // let {} = updateDoor()
+  const selectedDoorAccessoriesReturn = updateSelectedAccessories() ? updateSelectedAccessories() :  'нет аксессуаров'
+  let {colorPaint, colorFilm, colorHandle, opening} = updateDoor()
   console.log('updateDoor(): ', updateDoor());
 	// Параметры двери
-	// let doorParams = {
-	// 	'Цвет покраски': colorPaint,
-	// 	'Цвет пленки': colorFilm,
-	// 	'Расположение ручки': opening,
-	// 	'Цвет ручки': doorHandle,
-	// 	'Ширина двери': `${widthInput} см`,
-	// 	'Высота двери': `${heightInput} см`,
-  //   // 'Аксессуары': selectedDoorAccessoriesReturn,
-	// };
-  const doorParams = {
-    'Цвет покраски': 'Красный',
-    'Цвет пленки': 'Зеленый',
-    'Расположение ручки': 'Справа',
-    'Цвет ручки': 'Черный',
-    'Ширина двери': '100 см',
-    'Высота двери': '200 см',
-  };
+	let doorParams = {
+		'Цвет покраски': colorPaint,
+		'Цвет пленки': colorFilm,
+		'Расположение ручки': opening,
+		'Цвет ручки': colorHandle,
+		'Ширина двери': `${widthValue} см`,
+		'Высота двери': `${heightValue} см`,
+    'Аксессуары': selectedDoorAccessoriesReturn,
+	};
+  // const doorParams = {
+  //   'Цвет покраски': 'Красный',
+  //   'Цвет пленки': 'Зеленый',
+  //   'Расположение ручки': 'Справа',
+  //   'Цвет ручки': 'Черный',
+  //   'Ширина двери': '100 см',
+  //   'Высота двери': '200 см',
+  // };
 
 	// Формируем текст сообщения с параметрами двери
 	let messageText = 'Параметры двери:\n\n';
