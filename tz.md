@@ -32,9 +32,3 @@ Back-end стэк PHP (версия не новее 7.4) + MySQL (версия 5
 
 
 
-бот в телеграме
-Use this token to access the HTTP API:
-5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88
-
-
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api

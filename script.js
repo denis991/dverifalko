@@ -24,8 +24,8 @@ function updateSelectedAccessories() {
 	);
 	let selectedDoorAccessories = selectedOptions.join(', ');
 	selectedAccessoriesInput.value = selectedDoorAccessories;
-	// console.log('selectedDoorAccessories: ', selectedDoorAccessories);
-  return selectedDoorAccessories
+
+	return selectedDoorAccessories;
 }
 
 showBtn.addEventListener('click', showOptions);
@@ -50,7 +50,7 @@ const doorOpeningMirror = document.querySelector('.mirror');
 
 // Обработчик события изменения параметров
 function updateDoor() {
-	console.log('updateDoor');
+	// console.log('updateDoor');
 	// Получаем выбранные значения параметров
 	const colorPaint = colorPaintSelect.value;
 	const colorFilm = colorFilmSelect.value;
@@ -76,7 +76,7 @@ function updateDoor() {
 		doorOpeningMirror.style.alignItems = 'flex-start';
 	}
 
-  return {colorPaint, colorFilm, colorHandle, opening}
+	return { colorPaint, colorFilm, colorHandle, opening };
 }
 
 // Добавляем обработчик события изменения параметров
@@ -135,17 +135,14 @@ function updateTotalPrice() {
 
 	//==================== аксессуары ======================
 
-	// console.log('selectedOptionsAccessoriesSelect: ', selectedOptionsAccessoriesSelect);
 	const OptionsAcces = selectedOptionsAccessoriesSelect.reduce(
 		(accumulator, currentValue) => parseInt(accumulator, 10) + parseInt(currentValue, 10),
 		0
 	);
 
-	// console.log(OptionsAcces,'OptionsAcces');
-
 	//============== result ====================
 	const newTotalPrice = calculateTotalPrice(doorPriceMin); // Ваш код для расчета новой суммы
-	// console.log('newTotalPrice: ', newTotalPrice);
+
 	totalPriceSpan.textContent = newTotalPrice + OptionsAcces;
 }
 
@@ -175,14 +172,16 @@ For a description of the Bot API, see this page: https://core.telegram.org/bots/
  *
  */
 // Функция для отправки сообщения боту в Telegram
-function sendToTelegramBot() {
+async function sendToTelegramBot() {
 	// const chatId = '@dverifalko'; // Замените на имя вашего канала
 	const chatId = '215140425'; // Замените на имя вашего канала //526912355
 	const botToken = '5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88';
 	const url = 'https://api.telegram.org/bot' + botToken;
-  const selectedDoorAccessoriesReturn = updateSelectedAccessories() ? updateSelectedAccessories() :  'нет аксессуаров'
-  let {colorPaint, colorFilm, colorHandle, opening} = updateDoor()
-  console.log('updateDoor(): ', updateDoor());
+	const selectedDoorAccessoriesReturn = updateSelectedAccessories()
+		? updateSelectedAccessories()
+		: 'нет аксессуаров';
+	let { colorPaint, colorFilm, colorHandle, opening } = updateDoor();
+
 	// Параметры двери
 	let doorParams = {
 		'Цвет покраски': colorPaint,
@@ -191,16 +190,16 @@ function sendToTelegramBot() {
 		'Цвет ручки': colorHandle,
 		'Ширина двери': `${widthValue} см`,
 		'Высота двери': `${heightValue} см`,
-    'Аксессуары': selectedDoorAccessoriesReturn,
+		Аксессуары: selectedDoorAccessoriesReturn,
 	};
-  // const doorParams = {
-  //   'Цвет покраски': 'Красный',
-  //   'Цвет пленки': 'Зеленый',
-  //   'Расположение ручки': 'Справа',
-  //   'Цвет ручки': 'Черный',
-  //   'Ширина двери': '100 см',
-  //   'Высота двери': '200 см',
-  // };
+	// const doorParams = {
+	//   'Цвет покраски': 'Красный',
+	//   'Цвет пленки': 'Зеленый',
+	//   'Расположение ручки': 'Справа',
+	//   'Цвет ручки': 'Черный',
+	//   'Ширина двери': '100 см',
+	//   'Высота двери': '200 см',
+	// };
 
 	// Формируем текст сообщения с параметрами двери
 	let messageText = 'Параметры двери:\n\n';
@@ -208,8 +207,6 @@ function sendToTelegramBot() {
 		messageText += param + ': ' + doorParams[param] + '\n';
 	}
 
-	// Отправляем сообщение в телеграм канал
-	otpravka(botToken, messageText, chatId, url);
 	/**
 	 * var xhr = new XMLHttpRequest();
 	 * xhr.open('GET', 'https://api.example.com/data', true);
@@ -227,21 +224,60 @@ function sendToTelegramBot() {
 	// 	request.send();
 	// }
 
-	function otpravka(token, text, chatId, urlChat) {
-		fetch(`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
-			// fetch(`${urlChat}/getUpdates`)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`Request failed with status ${response.status}`);
-				}
-				return response.json();
-			})
-			.then((data) => {
+	async function otpravka(token, text, chatId, urlChat) {
+		try {
+			// fetch(`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
+			// 	// fetch(`${urlChat}/getUpdates`)
+			// 	.then((response) => {
+			// 		if (!response.ok) {
+			// 			throw new Error(`Request failed with status ${response.status}`);
+			// 		}
+			// 		return response.json();
+			// 	})
+			// 	.then((data) => {
+			// 		console.log('Message sent:', data);
+			// 	})
+			// 	.catch((error) => {
+			// 		console.error('Error sending message:', error);
+			// 	});
+			const response = await fetch(
+				`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`
+			);
+			if (response.ok && response.status >= 200 && response.status < 300) {
+				const data = await response.json();
 				console.log('Message sent:', data);
-			})
-			.catch((error) => {
-				console.error('Error sending message:', error);
-			});
+				return true; // Успешная отправка сообщения
+			} else {
+				throw new Error(`Request failed with status ${response.status}`);
+			}
+		} catch (error) {
+			console.error('Error sending message:', error);
+			return false; // Ошибка при отправке сообщения
+		}
+	}
+	// Отправляем сообщение в телеграм канал
+	const messageSent = await otpravka(botToken, messageText, chatId, url);
+	// ========= ЕСЛИ ПРОШЛА ОТПРАВКА ========
+	const successTooltip = document.getElementById('success-tooltip');
+	if (messageSent) {
+		// Прокрутка к элементу с id "footer"
+		const footerElement = document.getElementById('footer');
+		footerElement.scrollIntoView({ behavior: 'smooth' });
+
+		// Прокрутка к нижней части страницы
+		document.body.scrollIntoView({ behavior: 'smooth', block: 'end' });
+		// Или:
+		window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+		// Отображение всплывающего окна успеха
+		successTooltip.style.visibility = 'visible';
+		successTooltip.style.opacity = '1';
+
+		// Скрытие всплывающего окна после 2 секунд
+		setTimeout(function () {
+			successTooltip.style.visibility = 'hidden';
+			successTooltip.style.opacity = '0';
+		}, 2000);
 	}
 }
 //========================end bot telegram============================
