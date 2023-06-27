@@ -1,0 +1,31 @@
+{
+  "name": "dverifalko",
+  "version": "0.0.1",
+  "description": "",
+  "main": "script.js",
+  "author": {
+		"name": "Denis Gutsuliak",
+		"email": "d.99113@gmail.com",
+		"url": "https://t.me/d9911/"
+	},
+	"contributors": [
+		{
+			"name": "Denis Gutsuliak",
+			"email": "d.99113@gmail.com",
+			"url": "https://t.me/d9911/"
+		}
+	],
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denis991/dverifalko.git"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denis991/dverifalko/issues"
+  },
+  "homepage": "https://github.com/denis991/dverifalko#readme"
+}

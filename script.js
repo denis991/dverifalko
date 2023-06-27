@@ -14,6 +14,7 @@ function hideOptions() {
 	wrapperSelect.classList.remove('show-dropdown');
 }
 let selectedOptionsAccessoriesSelect = [];
+// var selectedDoorAccessories = [];
 function updateSelectedAccessories() {
 	const selectedOptions = Array.from(accessoriesSelect.selectedOptions).map(
 		(option) => option.text
@@ -21,7 +22,10 @@ function updateSelectedAccessories() {
 	selectedOptionsAccessoriesSelect = Array.from(accessoriesSelect.selectedOptions).map(
 		(option) => option.dataset.price
 	);
-	selectedAccessoriesInput.value = selectedOptions.join(', ');
+	let selectedDoorAccessories = selectedOptions.join(', ');
+	selectedAccessoriesInput.value = selectedDoorAccessories;
+	// console.log('selectedDoorAccessories: ', selectedDoorAccessories);
+  return selectedDoorAccessories
 }
 
 showBtn.addEventListener('click', showOptions);
@@ -71,6 +75,8 @@ function updateDoor() {
 		doorOpening.style.alignItems = 'flex-end';
 		doorOpeningMirror.style.alignItems = 'flex-start';
 	}
+
+  return {colorPaint, colorFilm, colorHandle, opening}
 }
 
 // Добавляем обработчик события изменения параметров
@@ -138,7 +144,7 @@ function updateTotalPrice() {
 	// console.log(OptionsAcces,'OptionsAcces');
 
 	//============== result ====================
-	const newTotalPrice = calculateTotalPrice(doorPriceMin ); // Ваш код для расчета новой суммы
+	const newTotalPrice = calculateTotalPrice(doorPriceMin); // Ваш код для расчета новой суммы
 	// console.log('newTotalPrice: ', newTotalPrice);
 	totalPriceSpan.textContent = newTotalPrice + OptionsAcces;
 }
@@ -150,5 +156,99 @@ accessoriesSelect.addEventListener('change', updateTotalPrice);
 // Получение кнопки
 const submitButton = document.getElementById('submit-button');
 
+//======================== bot telegram============================
+/**
+ * @param {string} token Токен бота
+  * @param {string} text Текст сообщения
+  * @param {string} chatId Идентификатор чата
+  * @returns {void}
+  * @see https://core.telegram.org/bots/api#sendmessage
+  * @see https://core.telegram.org/bots/api#markdown-style
+  * @see https://core.telegram.org/bots/api#html-style
+  * @see https://core.telegram.org/bots/api#formatting-options
+  * @see https://core.telegram.org/bots/api#sendmessage
+  * @see https://core.telegram.org/bots/api#sendphoto
+  * @see https://core.telegram.org/bots/api#senddocument
+  * @see https://core.telegram.org/bots/api#sendvideo
+5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+ *
+ */
+// Функция для отправки сообщения боту в Telegram
+function sendToTelegramBot() {
+	// const chatId = '@dverifalko'; // Замените на имя вашего канала
+	const chatId = '215140425'; // Замените на имя вашего канала //526912355
+	const botToken = '5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88';
+	const url = 'https://api.telegram.org/bot' + botToken;
+  // const selectedDoorAccessoriesReturn = updateSelectedAccessories() ? updateSelectedAccessories() :  'нет аксессуаров'
+  // let {} = updateDoor()
+  console.log('updateDoor(): ', updateDoor());
+	// Параметры двери
+	// let doorParams = {
+	// 	'Цвет покраски': colorPaint,
+	// 	'Цвет пленки': colorFilm,
+	// 	'Расположение ручки': opening,
+	// 	'Цвет ручки': doorHandle,
+	// 	'Ширина двери': `${widthInput} см`,
+	// 	'Высота двери': `${heightInput} см`,
+  //   // 'Аксессуары': selectedDoorAccessoriesReturn,
+	// };
+  const doorParams = {
+    'Цвет покраски': 'Красный',
+    'Цвет пленки': 'Зеленый',
+    'Расположение ручки': 'Справа',
+    'Цвет ручки': 'Черный',
+    'Ширина двери': '100 см',
+    'Высота двери': '200 см',
+  };
+
+	// Формируем текст сообщения с параметрами двери
+	let messageText = 'Параметры двери:\n\n';
+	for (let param in doorParams) {
+		messageText += param + ': ' + doorParams[param] + '\n';
+	}
+
+	// Отправляем сообщение в телеграм канал
+	otpravka(botToken, messageText, chatId, url);
+	/**
+	 * var xhr = new XMLHttpRequest();
+	 * xhr.open('GET', 'https://api.example.com/data', true);
+	 * */
+	// function otpravka(token, text, chatId,urlChat) {
+	// 	const url =
+	// 		'https://api.telegram.org/bot' +
+	// 		token +
+	// 		'/sendMessage?chat_id=' +
+	// 		chatId +
+	// 		'&text=' +
+	// 		encodeURIComponent(text);
+	// 	const request = new XMLHttpRequest();
+	// 	request.open('GET', url, true);
+	// 	request.send();
+	// }
+
+	function otpravka(token, text, chatId, urlChat) {
+		fetch(`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
+			// fetch(`${urlChat}/getUpdates`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Request failed with status ${response.status}`);
+				}
+				return response.json();
+			})
+			.then((data) => {
+				console.log('Message sent:', data);
+			})
+			.catch((error) => {
+				console.error('Error sending message:', error);
+			});
+	}
+}
+//========================end bot telegram============================
+
 // Добавление обработчика события click
-submitButton.addEventListener('click', updateTotalPrice);
+
+submitButton.addEventListener('click', function () {
+	updateTotalPrice();
+	sendToTelegramBot();
+});
