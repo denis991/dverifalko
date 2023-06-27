@@ -249,7 +249,7 @@ header div:first-child {
 
 .successful-shipment .tooltiptext {
 	background-color: #5cb85c;
-	bottom: -60%;
+	bottom: -100%;
 }
 
 .successful-shipment .tooltiptext::after {
@@ -260,7 +260,7 @@ header div:first-child {
 	margin-left: -5px;
 	border-width: 5px;
 	border-style: solid;
-	border-color: transparent transparent #5cb85c transparent;
+	border-color: transparent transparent #4de84dad transparent;
 }
 /*================== end button Jean ==================  */
 
