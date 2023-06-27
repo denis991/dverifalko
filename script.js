@@ -142,8 +142,9 @@ function updateTotalPrice() {
 
 	//============== result ====================
 	const newTotalPrice = calculateTotalPrice(doorPriceMin); // Ваш код для расчета новой суммы
-
-	totalPriceSpan.textContent = newTotalPrice + OptionsAcces;
+	const totalPriceAmount = newTotalPrice + OptionsAcces;
+	totalPriceSpan.textContent = totalPriceAmount;
+	return totalPriceAmount;
 }
 
 // Добавляем обработчик события изменения параметров
@@ -156,19 +157,9 @@ const submitButton = document.getElementById('submit-button');
 //======================== bot telegram============================
 /**
  * @param {string} token Токен бота
-  * @param {string} text Текст сообщения
-  * @param {string} chatId Идентификатор чата
-  * @returns {void}
-  * @see https://core.telegram.org/bots/api#sendmessage
-  * @see https://core.telegram.org/bots/api#markdown-style
-  * @see https://core.telegram.org/bots/api#html-style
-  * @see https://core.telegram.org/bots/api#formatting-options
-  * @see https://core.telegram.org/bots/api#sendmessage
-  * @see https://core.telegram.org/bots/api#sendphoto
-  * @see https://core.telegram.org/bots/api#senddocument
-  * @see https://core.telegram.org/bots/api#sendvideo
-5953868106:AAEToSwGXNBHAPGpu3bVaFPmB5wlp1T-H88
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+ * @param {string} text Текст сообщения
+ * @param {string} chatId Идентификатор чата
+ * @returns {void}
  *
  */
 // Функция для отправки сообщения боту в Telegram
@@ -182,6 +173,8 @@ async function sendToTelegramBot() {
 		: 'нет аксессуаров';
 	let { colorPaint, colorFilm, colorHandle, opening } = updateDoor();
 
+	// сумма
+	const totalPriceAmount = updateTotalPrice();
 	// Параметры двери
 	let doorParams = {
 		'Цвет покраски': colorPaint,
@@ -191,15 +184,8 @@ async function sendToTelegramBot() {
 		'Ширина двери': `${widthValue} см`,
 		'Высота двери': `${heightValue} см`,
 		Аксессуары: selectedDoorAccessoriesReturn,
+		'Итоговая сумма': `${totalPriceAmount} руб.`,
 	};
-	// const doorParams = {
-	//   'Цвет покраски': 'Красный',
-	//   'Цвет пленки': 'Зеленый',
-	//   'Расположение ручки': 'Справа',
-	//   'Цвет ручки': 'Черный',
-	//   'Ширина двери': '100 см',
-	//   'Высота двери': '200 см',
-	// };
 
 	// Формируем текст сообщения с параметрами двери
 	let messageText = 'Параметры двери:\n\n';
@@ -226,20 +212,6 @@ async function sendToTelegramBot() {
 
 	async function otpravka(token, text, chatId, urlChat) {
 		try {
-			// fetch(`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
-			// 	// fetch(`${urlChat}/getUpdates`)
-			// 	.then((response) => {
-			// 		if (!response.ok) {
-			// 			throw new Error(`Request failed with status ${response.status}`);
-			// 		}
-			// 		return response.json();
-			// 	})
-			// 	.then((data) => {
-			// 		console.log('Message sent:', data);
-			// 	})
-			// 	.catch((error) => {
-			// 		console.error('Error sending message:', error);
-			// 	});
 			const response = await fetch(
 				`${urlChat}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`
 			);
