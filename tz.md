@@ -32,3 +32,7 @@ Back-end стэк PHP (версия не новее 7.4) + MySQL (версия 5
 
 
 
+tlegram bot: @door_configurator_bot
+<b> – Жирный текст;
+<i> – Наклонный текст;
+<a> – URL ссылка.
